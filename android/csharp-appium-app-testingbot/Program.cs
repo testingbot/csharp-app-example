@@ -13,20 +13,20 @@ namespace TestingBotAppiumSingleTest
 
         public static void Main(string[] args)
         {
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.SetCapability("key", System.Environment.GetEnvironmentVariable(MainClass.key));
-            caps.SetCapability("secret", System.Environment.GetEnvironmentVariable(MainClass.secret));
-            caps.SetCapability("deviceName", "Galaxy S9");
-            caps.SetCapability("version", "9.0");
-            caps.SetCapability("app", System.Environment.GetEnvironmentVariable("TB_APP_ID"));
+            AppiumOptions caps = new AppiumOptions();
+            caps.AddAdditionalCapability("key", System.Environment.GetEnvironmentVariable(MainClass.key));
+            caps.AddAdditionalCapability("secret", System.Environment.GetEnvironmentVariable(MainClass.secret));
+            caps.AddAdditionalCapability("deviceName", "Galaxy S9");
+            caps.AddAdditionalCapability("version", "9.0");
+            caps.AddAdditionalCapability("app", System.Environment.GetEnvironmentVariable("TB_APP_ID"));
 
             var driver = new AndroidDriver<AndroidElement>(new Uri("https://hub.testingbot.com/wd/hub"), caps, TimeSpan.FromSeconds(120));
             AndroidElement inputA = (AndroidElement)new WebDriverWait(driver,TimeSpan.FromSeconds(30)).Until(
-                ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputA"))
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputA"))
             );
             inputA.SendKeys("10");
             AndroidElement inputB = (AndroidElement)new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputB"))
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputB"))
             );
             inputB.SendKeys("5");
             System.Threading.Thread.Sleep(2000);
