@@ -13,26 +13,26 @@ namespace TestingBotAppiumSingleTest
 
         public static void Main(string[] args)
         {
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.SetCapability("key", System.Environment.GetEnvironmentVariable(MainClass.key));
-            caps.SetCapability("secret", System.Environment.GetEnvironmentVariable(MainClass.secret));
-            caps.SetCapability("deviceName", "iPhone 11");
-            caps.SetCapability("version", "13.4");
-            caps.SetCapability("app", System.Environment.GetEnvironmentVariable("TB_APP_ID"));
+            AppiumOptions caps = new AppiumOptions();
+            caps.AddAdditionalCapability("key", System.Environment.GetEnvironmentVariable(MainClass.key));
+            caps.AddAdditionalCapability("secret", System.Environment.GetEnvironmentVariable(MainClass.secret));
+            caps.AddAdditionalCapability("deviceName", "iPhone 11");
+            caps.AddAdditionalCapability("version", "13.4");
+            caps.AddAdditionalCapability("app", System.Environment.GetEnvironmentVariable("TB_APP_ID"));
 
             IOSDriver<IOSElement> driver = new IOSDriver<IOSElement> (new Uri("http://hub.testingbot.com/wd/hub"), caps, TimeSpan.FromSeconds(300));
 
             IOSElement inputA = (IOSElement) new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputA"))
+                SeleniumExtras.WaitHelpers.ElementToBeClickable(MobileBy.AccessibilityId("inputA"))
             );
             inputA.SendKeys("10");
             IOSElement inputB = (IOSElement)new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("inputB"))
+                SeleniumExtras.WaitHelpers.ElementToBeClickable(MobileBy.AccessibilityId("inputB"))
             );
             inputB.SendKeys("5");
 
             IOSElement sum = (IOSElement)new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("sum"))
+                SeleniumExtras.WaitHelpers.ElementToBeClickable(MobileBy.AccessibilityId("sum"))
             );
 
             Console.WriteLine(sum);
