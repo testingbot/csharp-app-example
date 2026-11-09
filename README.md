@@ -1,32 +1,46 @@
 ## TestingBot - C# Mobile App Testing
 
 TestingBot provides a grid of browsers and mobile devices to run Automated tests.
-This example demonstrates how to use C# to run an Automated Test on a Mobile Device, located in the TestingBot Cloud.
+This example demonstrates how to use C# with NUnit and Appium to run an automated test on a mobile device in the TestingBot cloud.
+
+The test opens a sample calculator app, enters two numbers and checks the sum.
+
+* [`android`](android): Android emulator (Pixel 8, Android 14)
+* [`ios`](ios): iOS simulator (iPhone 16e, iOS 26.0)
+
+### Requirements
+
+* [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or newer
 
 ### Environment Setup
 
-1. Setup
-	* Clone this repository
+1. Clone this repository
 
 2. TestingBot Credentials
-    * Add your TestingBot Key and Secret as environmental variables. You can find these in the [TestingBot Dashboard](https://testingbot.com/members/).
+    * Add your TestingBot Key and Secret as environment variables. You can find these in the [TestingBot Dashboard](https://testingbot.com/members/).
     ```
-    $ export TB_KEY=<your TestingBot Key>
-    $ export TB_SECRET=<your TestingBot Secret>
+    $ export TESTINGBOT_KEY=<your TestingBot Key>
+    $ export TESTINGBOT_SECRET=<your TestingBot Secret>
     ```
-3. Specify `TB_APP_ID`
-	Let us know which app you want to test by specifying the `TB_APP_ID` environment variable. This should point to a public URL and contain a `.apk`, `.ipa` or `.zip` file.
-	For more information, please see our [Mobile App Documentation](https://testingbot.com/support/mobile/help.html).
+    (`TB_KEY`/`TB_SECRET` work too.)
 
-	If you do not have an `.ipa` or `.apk` file and just want to test, you can use https://testingbot.com/appium/sample.apk or https://testingbot.com/appium/sample.ipa
+3. Optional: specify `TB_APP_ID`
+    By default the tests use our sample apps (https://testingbot.com/appium/sample.apk and https://testingbot.com/appium/sample.zip).
+    To test your own app, upload it to [TestingBot Storage](https://testingbot.com/support/app-automate/help#upload) and set `TB_APP_ID` to the `tb://...` id it returns (or to a public URL of an `.apk`, `.ipa` or `.zip`):
+    ```
+    $ export TB_APP_ID=tb://<your-app-id>
+    ```
+    iOS simulators need a zipped `.app` simulator build. For a physical device, use an `.ipa` and add `["realDevice"] = true` to `tb:options`.
 
-	To test with ipa files, you'll need to edit the `DesiredCapabilities` to include `realDevice: true`
+### Running Tests
 
-## Running Tests
-* To run a test, please use Visual Studio or Mono.
+```
+$ cd android   # or: cd ios
+$ dotnet test
+```
 
-You will see the test result in the [TestingBot Dashboard](https://testingbot.com/members/)
+Each test is marked as passed or failed on TestingBot. You will see the test results in the [TestingBot Dashboard](https://testingbot.com/members/).
 
 ### Resources
-##### [TestingBot Documentation](https://testingbot.com/support/mobile/csharp.html)
-##### [Appium Documentation](http://appium.io/)
+##### [TestingBot C# Appium Documentation](https://testingbot.com/support/app-automate/appium/csharp)
+##### [Appium Documentation](https://appium.io/)
